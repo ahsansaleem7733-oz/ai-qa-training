@@ -7,14 +7,13 @@ This file is a review template. Do not claim an AI mistake was observed until yo
 Record at least three actual issues below. For each one, include the test ID, the line or behavior, what happened on the page, how you identified the problem, and the correction you made.
 
 ### Issue 1
-- Test ID: 05
-- What the AI draft got wrong:
-
-- How I found it (error and what I saw on the page):
-- What I changed:
+- Test ID: 07
+- What the AI draft got wrong: Wrong Assertion applied on wrong locator.
+- How I found it (error and what I saw on the page): I checked from website, if locator actually presents or not.
+- What I changed: Added right locator assertion 
 
 ### Issue 2
-- Test ID:
+- Test ID: 05
 - What the AI draft got wrong: It didn't correctly apply product price sorting.
 - How I found it: The test failed because prices were not in descending order.
 - What I changed: Added a check to verify the selected sorting option and wait for Page Idle state.

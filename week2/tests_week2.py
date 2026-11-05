@@ -38,6 +38,7 @@ PRODUCT_PRICE = '[data-test="product-price"]'
 SORT_SELECT = '[data-test="sort"]'
 NAV_CATEGORIES = '[data-test="nav-categories"]'
 NAV_POWER_TOOLS = '[data-test="nav-power-tools"]'
+PAGE_TITLE = '[data-test="page-title"]'
 NAV_CART = '[data-test="nav-cart"]'
 CART_QUANTITY = '[data-test="cart-quantity"]'
 NAV_CONTACT = '[data-test="nav-contact"]'
@@ -65,7 +66,7 @@ NO_RESULTS_MESSAGE = 'text=No products found'  # TODO: confirm exact current no-
 
 
 def open_home(page):
-    page.goto(BASE_URL, wait_until="networkidle")
+    page.goto(BASE_URL, wait_until="domcontentloaded")
     page.locator(PRODUCT_CARD).first.wait_for()
 
 
@@ -193,8 +194,9 @@ def test_TC_07(page):
     open_home(page)
     open_power_tools(page)
     select_option_or_fail(page, SORT_SELECT, "Price (High - Low)")
-    expect(page.locator(NAV_POWER_TOOLS)).to_be_visible()
-
+    assert page.locator(PAGE_TITLE).inner_text().strip() == "Category: Power Tools", (
+    f"Expected 'Category: Power Tools', but got '{page.locator(PAGE_TITLE).inner_text().strip()}'."
+    )
     prices = read_product_prices(page)
     assert prices, "Expected at least one Power Tools product to be listed."
     assert prices == sorted(prices, reverse=True), (
