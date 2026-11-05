@@ -22,7 +22,15 @@ Record at least three actual issues below. For each one, include the test ID, th
 - Test ID: 09
 - What the AI draft got wrong: wrong locator of product price was added
 - How I found it (error and what I saw on the page): locator visibility was timing out.
-- What I changed: Added Correct Product locator.s
+- What I changed: Added Correct Product locator.
+
+
+### Issue 4
+- Test ID: 12
+- What the AI draft got wrong: wrong locator for Delete cart items, and message mismatch in assertion for empty cart.
+- How I found it (error and what I saw on the page): locator visibility was timing out.
+- What I changed: Added Correct Delete cart items locator.
+
 
 ## One thing the assistant got right
 

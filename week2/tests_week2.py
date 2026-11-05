@@ -60,8 +60,8 @@ UNIT_PRICE = '[data-test="unit-price"]'  # confirmed on product page in current 
 CART_LINE_PRICE = '[data-test="line-price"]'  # confirmed on checkout page in current DOM
 CART_TOTAL = '[data-test="cart-total"]'  # confirmed on checkout page in current DOM
 
-REMOVE_BUTTON = '[data-test="delete"]'  # TODO: inspect current cart removal control
-EMPTY_CART_MESSAGE = 'text=Your shopping cart is empty'  # TODO: confirm exact current message
+REMOVE_BUTTON = '.btn-danger'  # TODO: inspect current cart removal control
+EMPTY_CART_MESSAGE = 'The cart is empty. Nothing to display.'  # TODO: confirm exact current message
 NO_RESULTS_MESSAGE = 'text=No products found'  # TODO: confirm exact current no-results message
 
 
@@ -238,15 +238,11 @@ def test_TC_12(page):
     page.locator(ADD_TO_CART).click()
     page.locator(NAV_CART).click()
     page.wait_for_load_state("networkidle")
-
-    # The current cart UI should still be inspected before trusting a removal selector.
-    # The historical value [data-test="delete"] has been intentionally left as a TODO.
-    # Keep the test in draft form until the live DOM confirms the correct control.
     remove = page.locator(REMOVE_BUTTON)
     expect(remove).to_be_visible()
     remove.click()
 
-    expect(page.get_by_text("Your shopping cart is empty", exact=False)).to_be_visible()
+    expect(page.get_by_text(EMPTY_CART_MESSAGE, exact=False)).to_be_visible()
 
 
 def test_TC_14(page):
