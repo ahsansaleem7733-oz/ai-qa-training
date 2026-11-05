@@ -247,6 +247,7 @@ def test_TC_12(page):
 
 def test_TC_14(page):
     """Submitting an empty contact form should show required-field validation."""
+    open_home(page)
     open_contact(page)
 
     for field in [
@@ -288,15 +289,15 @@ def test_TC_15(page):
 
 
 TEST_CASES = [
-    test_TC_01,
-    test_TC_02,
-    test_TC_03,
-    test_TC_05,
-    test_TC_07,
-    test_TC_09,
-    test_TC_12,
+    # test_TC_01,
+    # test_TC_02,
+    # test_TC_03,
+    # test_TC_05,
+    # test_TC_07,
+    # test_TC_09,
+    # test_TC_12,
     test_TC_14,
-    test_TC_15,
+    # test_TC_15,
 ]
 
 

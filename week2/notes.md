@@ -32,6 +32,13 @@ Record at least three actual issues below. For each one, include the test ID, th
 - What I changed: Added Correct Delete cart items locator.
 
 
+### Issue 5
+- Test ID: 14
+- What the AI draft got wrong: Without Opening website, it redirecting to Contact page.
+- How I found it (error and what I saw on the page): Website was not opening
+- What I changed: Added Function for calling opening website.
+
+
 ## One thing the assistant got right
 
 - What it got right:
