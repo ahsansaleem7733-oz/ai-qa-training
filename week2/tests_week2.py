@@ -215,7 +215,7 @@ def test_TC_09(page):
     page.locator(NAV_CART).click()
     page.wait_for_load_state("networkidle")
 
-    unit_price = parse_money(page.locator(UNIT_PRICE).inner_text())
+    unit_price = parse_money(page.locator(PRODUCT_PRICE).inner_text())
     line_price = parse_money(page.locator(CART_LINE_PRICE).inner_text())
     cart_total = parse_money(page.locator(CART_TOTAL).inner_text())
 

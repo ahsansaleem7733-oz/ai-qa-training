@@ -19,10 +19,10 @@ Record at least three actual issues below. For each one, include the test ID, th
 - What I changed: Added a check to verify the selected sorting option and wait for Page Idle state.
 
 ### Issue 3
-- Test ID:
-- What the AI draft got wrong:
-- How I found it (error and what I saw on the page):
-- What I changed:
+- Test ID: 09
+- What the AI draft got wrong: wrong locator of product price was added
+- How I found it (error and what I saw on the page): locator visibility was timing out.
+- What I changed: Added Correct Product locator.s
 
 ## One thing the assistant got right
 
