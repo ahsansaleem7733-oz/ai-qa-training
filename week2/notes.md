@@ -33,7 +33,7 @@ Record at least three actual issues below. For each one, include the test ID, th
 
 
 ### Issue 5
-- Test ID: 14
+- Test ID: 14,15
 - What the AI draft got wrong: Without Opening website, it redirecting to Contact page.
 - How I found it (error and what I saw on the page): Website was not opening
 - What I changed: Added Function for calling opening website.

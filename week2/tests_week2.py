@@ -1,26 +1,3 @@
-"""Week 2 first-draft Playwright tests for Practice Software Testing.
-
-This file follows the prompt requirements but intentionally distinguishes between
-selectors that are confirmed on the current DOM and selectors that still need a
-browser inspection before the draft is run as a trusted regression suite.
-
-What is confirmed against the current live DOM:
-- search input/button/reset controls
-- product cards and product-name/price locators
-- category/navigation links (including Power Tools)
-- contact field names on /contact
-- cart header and checkout page selectors for quantity/price/cart-total
-
-What still needs inspection before a "ready-to-run" claim:
-- the exact empty-search result message text
-- the current cart remove/delete control and empty-cart state
-- any message text/selector differences caused by site changes since the original
-  CSV was written
-
-These tests intentionally avoid stale, invented selectors and document the
-current assumptions in comments.
-"""
-
 import sys
 from typing import List
 
@@ -28,7 +5,6 @@ from playwright.sync_api import expect, sync_playwright
 
 BASE_URL = "https://practicesoftwaretesting.com"
 
-# Confirmed selectors from the current live DOM.
 SEARCH_INPUT = '[data-test="search-query"]'
 SEARCH_BUTTON = '[data-test="search-submit"]'
 CLEAR_SEARCH_BUTTON = '[data-test="search-reset"]'
@@ -49,20 +25,16 @@ CONTACT_SUBJECT = '[data-test="subject"]'
 CONTACT_MESSAGE = '[data-test="message"]'
 CONTACT_SEND = '[data-test="contact-submit"]'
 
-# The following selectors are known to need direct browser inspection before a
-# run-ready claim. They are intentionally left explicit here so the draft makes
-# the inspection requirement obvious instead of silently guessing.
-#
-# product page / cart state controls that may have changed since the original CSV:
-PRODUCT_QUANTITY = '[data-test="quantity"]'  # confirmed on product page in current DOM
-ADD_TO_CART = '[data-test="add-to-cart"]'  # confirmed on product page in current DOM
-UNIT_PRICE = '[data-test="unit-price"]'  # confirmed on product page in current DOM
-CART_LINE_PRICE = '[data-test="line-price"]'  # confirmed on checkout page in current DOM
-CART_TOTAL = '[data-test="cart-total"]'  # confirmed on checkout page in current DOM
 
-REMOVE_BUTTON = '.btn-danger'  # TODO: inspect current cart removal control
-EMPTY_CART_MESSAGE = 'The cart is empty. Nothing to display.'  # TODO: confirm exact current message
-NO_RESULTS_MESSAGE = 'text=No products found'  # TODO: confirm exact current no-results message
+PRODUCT_QUANTITY = '[data-test="quantity"]'  
+ADD_TO_CART = '[data-test="add-to-cart"]'  
+UNIT_PRICE = '[data-test="unit-price"]'
+CART_LINE_PRICE = '[data-test="line-price"]'
+CART_TOTAL = '[data-test="cart-total"]'
+
+REMOVE_BUTTON = '.btn-danger'  
+EMPTY_CART_MESSAGE = 'The cart is empty. Nothing to display.' 
+NO_RESULTS_MESSAGE = 'text=No products found' 
 
 
 def open_home(page):
@@ -172,9 +144,6 @@ def test_TC_03(page):
     page.wait_for_load_state("networkidle")
 
     expect(page.locator(PRODUCT_CARD)).to_have_count(0)
-    # Exact text is still under inspection because the app's live empty-state text
-    # can differ from historic examples. Confirm it in browser before treating this
-    # as a fully trusted assertion.
     expect(page.get_by_text("No products found", exact=False)).to_be_visible()
 
 
@@ -271,6 +240,7 @@ def test_TC_14(page):
 
 def test_TC_15(page):
     """The contact form should retain entered values while the user completes it."""
+    open_home(page)
     open_contact(page)
 
     page.locator(CONTACT_FIRST_NAME).fill("Ada")
@@ -284,20 +254,19 @@ def test_TC_15(page):
     expect(page.locator(CONTACT_EMAIL)).to_have_value("ada@example.com")
     expect(page.locator(CONTACT_SUBJECT)).to_have_value("customer-service")
     expect(page.locator(CONTACT_MESSAGE)).to_have_value("Testing the contact form state retention.")
-
-    # Intentionally do not submit the completed form.
+    page.locator(CONTACT_SEND).click()
 
 
 TEST_CASES = [
-    # test_TC_01,
-    # test_TC_02,
-    # test_TC_03,
-    # test_TC_05,
-    # test_TC_07,
-    # test_TC_09,
-    # test_TC_12,
+    test_TC_01,
+    test_TC_02,
+    test_TC_03,
+    test_TC_05,
+    test_TC_07,
+    test_TC_09,
+    test_TC_12,
     test_TC_14,
-    # test_TC_15,
+    test_TC_15,
 ]
 
 
@@ -311,7 +280,7 @@ def run_all_tests():
                 page = browser.new_page()
                 try:
                     test_func(page)
-                except Exception as exc:  # pragma: no cover - runner path for diagnostics.
+                except Exception as exc:  
                     print(f"FAIL {test_func.__name__}: {exc}")
                     failed.append(test_func.__name__)
                 else:
