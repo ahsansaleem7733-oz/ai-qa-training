@@ -105,7 +105,21 @@ def parse_money(value):
 def select_option_or_fail(page, selector, label):
     select = page.locator(selector)
     expect(select).to_be_visible()
-    select.select_option(label=label)
+    if label == "Price (High - Low)":
+        print(f"Selecting {label!r} by value 'price,desc'")
+        select.select_option("price,desc")
+        assert select.input_value() == "price,desc", (
+        "Price: High - Low sorting option was not selected."
+        )
+        page.wait_for_load_state("networkidle")
+    elif label == "Name (Z - A)":
+        print(f"Selecting {label!r} by value 'name,desc'")
+        select.select_option("name,desc")
+        assert select.input_value() == "name,desc", (
+        "Name: Z - A sorting option was not selected."
+        )
+    else:
+        select.select_option(label=label)
 
 
 def test_TC_01(page):
@@ -292,7 +306,7 @@ def run_all_tests():
     """Execute every selected test case independently with PASS/FAIL output."""
     failed = []
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
+        browser = playwright.chromium.launch(headless=False)
         try:
             for test_func in TEST_CASES:
                 page = browser.new_page()
