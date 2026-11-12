@@ -1,0 +1,7 @@
+test_id,sort_option,sort_value,sort_type,direction,is_valid,expected_order,manual_observation
+SORT_NAME_ASC,Name (A - Z),"name,asc",name,asc,true,ascending,User-provided manual table: valid
+SORT_NAME_DESC,Name (Z - A),"name,desc",name,desc,true,descending,User-provided manual table: valid
+SORT_PRICE_ASC,Price (Low - High),"price,asc",price,asc,true,ascending,User-provided manual table: valid
+SORT_PRICE_DESC,Price (High - Low),"price,desc",price,desc,true,descending,User-provided manual table: valid
+SORT_DEFAULT,Default sorting,,default,not_observed,true,PENDING,Not manually observed yet
+SORT_INVALID,Unsupported sort,Unsupported sort,invalid,asc,false,PENDING,Not manually observed yet
