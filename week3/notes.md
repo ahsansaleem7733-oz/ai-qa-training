@@ -18,10 +18,10 @@ reviewing or running it; do not report an unobserved issue.
 - What I changed: Added both checks, with verifying normal listing of products.
 
 ### Finding 3
-- Test ID:
-- What the draft got wrong:
-- How I verified it:
-- What I changed:
+- Test ID: 3
+- What the draft got wrong: Hardcoded data was used while calling API.
+- How I verified it: Single result output printed
+- What I changed: Added code for reading csv data.
 
 ## Manual observations still needed
 
