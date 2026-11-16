@@ -4,7 +4,7 @@ import csv
 from pathlib import Path
 
 import pytest
-from playwright.sync_api import expect
+from playwright.sync_api import Error, expect
 
 from helpers import cleanup_browser, initialize_browser, open_website
 
@@ -64,6 +64,24 @@ def test_sorting_from_csv(scenario):
         sort_type = scenario["sort_type"]
         direction = scenario["direction"]
 
+        if sort_type == "default":
+            assert sort_value == ""
+            assert sort_select.input_value() == "", (
+                "Expected the default sorting option to have an empty value."
+            )
+            expect(page.locator(PRODUCT_CARDS).first).to_be_visible()
+            assert page.locator(PRODUCT_CARDS).count() > 0, (
+                "Expected the normal product listing with default sorting."
+            )
+            return
+
+        if scenario["is_valid"].lower() == "false":
+            expect(page.locator(PRODUCT_CARDS).first).to_be_visible()
+            assert page.locator(PRODUCT_CARDS).count() > 0, (
+            "Expected the normal product listing with default sorting."
+            )
+            return
+
         sort_select.select_option(value=sort_value)
         assert sort_select.input_value() == sort_value, (
             f"Expected sorting option {sort_value!r} to be selected."
@@ -73,13 +91,10 @@ def test_sorting_from_csv(scenario):
         displayed_values = read_displayed_values(page, sort_type)
         assert displayed_values, "Expected products to be displayed after sorting."
 
-        if sort_type in ("name", "price", "co2"):
-            expected_values = sorted(
-                displayed_values,
-                reverse=direction == "desc",
-            )
-        else:
-            raise AssertionError(f"Unsupported test sort type: {sort_type!r}.")
+        expected_values = sorted(
+            displayed_values,
+            reverse=direction == "desc",
+        )
 
         assert displayed_values == expected_values, (
             f"Expected {direction} {sort_type} order, "

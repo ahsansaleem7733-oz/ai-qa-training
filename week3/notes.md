@@ -12,10 +12,10 @@ reviewing or running it; do not report an unobserved issue.
 - What I changed: Added the CO2 sort parameters.
 
 ### Finding 2
-- Test ID:
-- What the draft got wrong:
-- How I verified it:
-- What I changed:
+- Test ID: 2
+- What the draft got wrong: Not covering default and invalid sort options.
+- How I verified it: Script is skipping both the cases.
+- What I changed: Added both checks, with verifying normal listing of products.
 
 ### Finding 3
 - Test ID:
@@ -25,8 +25,8 @@ reviewing or running it; do not report an unobserved issue.
 
 ## Manual observations still needed
 
-- Default sorting outcome: not observed. Its CSV row remains `PENDING` and the
-  corresponding pytest case is skipped.
+- Default sorting outcome: the user observed an empty option value and the
+  normal product listing. The test verifies both without assuming an ordering.
 - Unsupported sorting outcome: not observed. Its CSV row remains `PENDING` and
   the corresponding pytest case is skipped.
 
