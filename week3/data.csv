@@ -3,5 +3,7 @@ SORT_NAME_ASC,Name (A - Z),"name,asc",name,asc,true,ascending,User-provided manu
 SORT_NAME_DESC,Name (Z - A),"name,desc",name,desc,true,descending,User-provided manual table: valid
 SORT_PRICE_ASC,Price (Low - High),"price,asc",price,asc,true,ascending,User-provided manual table: valid
 SORT_PRICE_DESC,Price (High - Low),"price,desc",price,desc,true,descending,User-provided manual table: valid
+SORT_CO2_ASC,CO₂ Rating (A - E),"co2_rating,asc",co2,asc,true,ascending,Live dropdown value confirmed
+SORT_CO2_DESC,CO₂ Rating (E - A),"co2_rating,desc",co2,desc,true,descending,Live dropdown value confirmed
 SORT_DEFAULT,Default sorting,,default,not_observed,true,PENDING,Not manually observed yet
 SORT_INVALID,Unsupported sort,Unsupported sort,invalid,asc,false,PENDING,Not manually observed yet

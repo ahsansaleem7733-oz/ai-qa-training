@@ -1,4 +1,4 @@
-"""First Week 3 sorting test: select Price (High - Low) in the page."""
+"""Week 3 in-code tests for product sorting options."""
 
 import pytest
 from playwright.sync_api import expect
@@ -7,7 +7,9 @@ from helpers import cleanup_browser, initialize_browser, open_website
 
 
 PRODUCT_CARDS = 'a.card[data-test^="product-"]'
+PRODUCT_NAME = '[data-test="product-name"]'
 PRODUCT_PRICE = '[data-test="product-price"]'
+PRODUCT_CO2_RATING = '[data-test="co2-rating-badge"] .active'
 SORT_SELECT = '[data-test="sort"]'
 
 
@@ -18,8 +20,17 @@ SORT_SELECT = '[data-test="sort"]'
         ("Name (Z - A)", "name,desc", "name", "desc"),
         ("Price (Low - High)", "price,asc", "price", "asc"),
         ("Price (High - Low)", "price,desc", "price", "desc"),
+        ("CO₂ Rating (A - E)", "co2_rating,asc", "co2", "asc"),
+        ("CO₂ Rating (E - A)", "co2_rating,desc", "co2", "desc"),
     ],
-    ids=["name-ascending", "name-descending", "price-ascending", "price-descending"],
+    ids=[
+        "name-ascending",
+        "name-descending",
+        "price-ascending",
+        "price-descending",
+        "co2-rating-ascending",
+        "co2-rating-descending",
+    ],
 )
 def test_product_sorting(sort_option, sort_value, sort_type, direction):
     playwright, browser, page = initialize_browser()
@@ -38,8 +49,11 @@ def test_product_sorting(sort_option, sort_value, sort_type, direction):
         displayed_values = []
         for index in range(cards.count()):
             if sort_type == "name":
-                name = cards.nth(index).locator('[data-test="product-name"]').inner_text()
+                name = cards.nth(index).locator(PRODUCT_NAME).inner_text()
                 displayed_values.append(name.strip().casefold())
+            elif sort_type == "co2":
+                rating = cards.nth(index).locator(PRODUCT_CO2_RATING).inner_text()
+                displayed_values.append(rating.strip())
             else:
                 price_text = cards.nth(index).locator(PRODUCT_PRICE).inner_text()
                 displayed_values.append(

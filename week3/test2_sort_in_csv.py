@@ -12,6 +12,7 @@ from helpers import cleanup_browser, initialize_browser, open_website
 PRODUCT_CARDS = 'a.card[data-test^="product-"]'
 PRODUCT_NAME = '[data-test="product-name"]'
 PRODUCT_PRICE = '[data-test="product-price"]'
+PRODUCT_CO2_RATING = '[data-test="co2-rating-badge"] .active'
 SORT_SELECT = '[data-test="sort"]'
 
 
@@ -35,6 +36,10 @@ def read_displayed_values(page, sort_type):
             values.append(
                 float(price_text.replace("$", "").replace(",", "").strip())
             )
+        elif sort_type == "co2":
+            values.append(
+                card.locator(PRODUCT_CO2_RATING).inner_text().strip()
+            )
     return values
 
 
@@ -57,7 +62,7 @@ def test_sorting_from_csv(scenario):
 
         sort_value = scenario["sort_value"]
         sort_type = scenario["sort_type"]
-        expected_order = scenario["expected_order"]
+        direction = scenario["direction"]
 
         sort_select.select_option(value=sort_value)
         assert sort_select.input_value() == sort_value, (
@@ -68,21 +73,16 @@ def test_sorting_from_csv(scenario):
         displayed_values = read_displayed_values(page, sort_type)
         assert displayed_values, "Expected products to be displayed after sorting."
 
-        if sort_type == "name":
+        if sort_type in ("name", "price", "co2"):
             expected_values = sorted(
                 displayed_values,
-                reverse=expected_order == "descending",
-            )
-        elif sort_type == "price":
-            expected_values = sorted(
-                displayed_values,
-                reverse=expected_order == "descending",
+                reverse=direction == "desc",
             )
         else:
             raise AssertionError(f"Unsupported test sort type: {sort_type!r}.")
 
         assert displayed_values == expected_values, (
-            f"Expected {expected_order} {sort_type} order, "
+            f"Expected {direction} {sort_type} order, "
             f"got {displayed_values!r}."
         )
     finally:
