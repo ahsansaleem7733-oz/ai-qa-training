@@ -6,10 +6,10 @@ Keep the first generated version as the AI draft. Record actual findings after
 reviewing or running it; do not report an unobserved issue.
 
 ### Finding 1
-- Test ID:
-- What the draft got wrong:
-- How I verified it:
-- What I changed:
+- Test ID: 1,2,4
+- What the draft got wrong: Missing CO2 Sort Parameter
+- How I verified it: Verified by checking the script
+- What I changed: Added the CO2 sort parameters.
 
 ### Finding 2
 - Test ID:
